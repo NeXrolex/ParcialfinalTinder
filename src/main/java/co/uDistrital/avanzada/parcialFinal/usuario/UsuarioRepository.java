@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //Entidad que queremos guardar y el tipo de dato del identificador
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     
-    Usuario findByCodigo(String codigo);
+    
+    Usuario findByCorreo(String correo);
+    
     
 }
