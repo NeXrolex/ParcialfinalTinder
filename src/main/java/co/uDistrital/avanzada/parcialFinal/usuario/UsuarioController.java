@@ -5,9 +5,12 @@
 package co.uDistrital.avanzada.parcialFinal.usuario;
 
 /**
+ * Maneja los verbos  y los endpoints relacionados a 
+ * un usuario
  *
- * @author santi
+ * @author Alex
  */
+
 public class UsuarioController {
     
 }
