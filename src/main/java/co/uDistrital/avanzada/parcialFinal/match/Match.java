@@ -22,7 +22,7 @@ import lombok.Data;
  */
 @Data //getterand setter
 @Entity
-@Table(name = "match")
+@Table(name = "matches")
 public class Match {
     
     @Id                                                

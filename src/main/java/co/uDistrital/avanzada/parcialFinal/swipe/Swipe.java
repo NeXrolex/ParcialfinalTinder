@@ -20,7 +20,7 @@ import lombok.Data;
  */
 @Data//Getter and setter
 @Entity
-@Table(name = "swipe")
+@Table(name = "swipes")
 public class Swipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
