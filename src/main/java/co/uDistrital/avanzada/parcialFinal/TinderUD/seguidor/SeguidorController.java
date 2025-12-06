@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Maneja end points y relaciones entre los seguidores
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author Alex
  */
+@RestController
 public class SeguidorController {
 
     @Autowired
@@ -32,7 +33,6 @@ public class SeguidorController {
      * @return Relacion creada
      */
     @RequestMapping(value = "/api/seguidor", method = RequestMethod.POST)
-    @CrossOrigin(origins = "http://localhost:8383")
     public ResponseEntity<Seguidor> 
         crearSeguidor(@RequestBody Seguidor seguidor) {
         return service.crearSeguidor(seguidor);
@@ -42,7 +42,6 @@ public class SeguidorController {
      * Lista todas las relaciones de seguidores
      */
     @RequestMapping(value = "/api/seguidor", method = RequestMethod.GET)
-    @CrossOrigin(origins = "http://localhost:8383")
     public ResponseEntity<List<Seguidor>> listarSeguidores() {
         List<Seguidor> lista = service.getAllSeguidores();
         return new ResponseEntity<>(lista, HttpStatus.OK);
@@ -55,7 +54,6 @@ public class SeguidorController {
      */
     @RequestMapping(value="/api/seguidor/seguidos/{idSeguidor}",
             method = RequestMethod.GET)
-    @CrossOrigin(origins="http://localhost:8383")
     public ResponseEntity<List<Seguidor>> listarSeguidosPor(@PathVariable
             Long idSeguidor) {
         List<Seguidor> lista = service.getSeguidosPor(idSeguidor);
@@ -69,7 +67,6 @@ public class SeguidorController {
      */
     @RequestMapping(value="/api/seguidor/seguidores/{idSeguido}",
             method = RequestMethod.GET)
-    @CrossOrigin(origins="http://localhost:8383")
     public ResponseEntity<List<Seguidor>> listarSeguidoresDe(@PathVariable
             Long idSeguido) {
         List<Seguidor> lista = service.getSeguidoresDe(idSeguido);
@@ -82,7 +79,6 @@ public class SeguidorController {
      * @param id Identificador de la relacion
      */
     @RequestMapping(value="/api/seguidor/{id}", method = RequestMethod.DELETE)
-    @CrossOrigin(origins="http://localhost:8383")
     public ResponseEntity<Void> eliminarSeguidor(@PathVariable Long id) {
         service.eliminarSeguidor(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
