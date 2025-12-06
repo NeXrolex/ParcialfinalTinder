@@ -7,6 +7,7 @@ package co.uDistrital.avanzada.parcialFinal.seguidor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *
  * @author Alex
  */
+@Component // Es un service que se inyecta y comunica
 public class SeguidorService {
     
     @Autowired
