@@ -62,17 +62,16 @@ public class UsuarioController {
 
         return ResponseEntity.ok(service.findById(id));
     }
-    
+
     /**
      * Obtiene un usuario por su correo
-     * 
+     *
      * @param correo Correo del usuario
      * @return Usuario asociado a ese correo de manera serializada
      */
     @RequestMapping(value = "/api/usuario/{correo}", method = RequestMethod.GET)
     @CrossOrigin(origins = "http://localhost:8383")
-    public ResponseEntity<Usuario> obtenerPorCorreo(@PathVariable 
-            String correo) {
+    public ResponseEntity<Usuario> obtenerPorCorreo(@PathVariable String correo) {
         Usuario usuario = service.findByCorreo(correo);
         //Devolvemos la respuesta HTTP con el usuario en formato JSON
         return ResponseEntity.ok(usuario);
@@ -91,6 +90,20 @@ public class UsuarioController {
             @RequestBody Usuario usuario) {
         Usuario actualizado = service.crearUsuario(usuario);
         return new ResponseEntity<>(actualizado, HttpStatus.OK);
+    }
+    
+    /**
+     * Realiza un login de inicio de sesion
+     * 
+     * @param credenciales Credenciales de inicio 
+     * @return Usuario serealizado
+     */
+    @RequestMapping(value = "/api/usuario/login", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:8383")
+    public ResponseEntity<Usuario> login(@RequestBody Usuario credenciales) {
+        Usuario usuario = service.login(credenciales.getCorreo(),
+                credenciales.getPassword());
+        return ResponseEntity.ok(usuario); // puede devolver null si no existe
     }
 
     /**

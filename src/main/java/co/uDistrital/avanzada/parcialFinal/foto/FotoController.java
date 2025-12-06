@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class FotoController {
-    
-    @Autowired 
+
+    @Autowired
     private FotoService service;
-    
+
     /**
-     * Crea una nueva foto.
-     * Recibe un objeto Foto en formato JSON y retorna la foto creada.
-     * 
+     * Crea una nueva foto. Recibe un objeto Foto en formato JSON y retorna la
+     * foto creada.
+     *
      * @param foto Objeto Foto enviado en el cuerpo de la peticion
      * @return Foto creada dentro de un ResponseEntity
      */
@@ -37,10 +37,10 @@ public class FotoController {
     public ResponseEntity<Foto> crearFoto(@RequestBody Foto foto) {
         return service.crearFoto(foto);
     }
-    
+
     /**
      * Lista todas las fotos registradas.
-     * 
+     *
      * @return Lista de fotos en formato JSON
      */
     @RequestMapping(value = "/api/foto", method = RequestMethod.GET)
@@ -49,10 +49,10 @@ public class FotoController {
         List<Foto> lista = service.getAllFotos();
         return ResponseEntity.ok(lista);
     }
-    
+
     /**
      * Obtiene una foto por su id.
-     * 
+     *
      * @param id Identificador de la foto
      * @return Foto en formato JSON (puede ser null si no existe)
      */
@@ -62,25 +62,25 @@ public class FotoController {
         Foto foto = service.findById(id);
         return ResponseEntity.ok(foto);
     }
-    
+
     /**
      * Lista todas las fotos de un usuario.
-     * 
+     *
      * @param idUsuario Id del usuario dueño de las fotos
      * @return Lista de fotos del usuario
      */
     @RequestMapping(value = "/api/foto/usuario/{idUsuario}",
             method = RequestMethod.GET)
     @CrossOrigin(origins = "http://localhost:8383")
-    public ResponseEntity<List<Foto>> listarPorUsuario(@PathVariable
+    public ResponseEntity<List<Foto>> listarPorUsuario(@PathVariable 
             Long idUsuario) {
         List<Foto> lista = service.getFotosPorUsuario(idUsuario);
         return ResponseEntity.ok(lista);
     }
-    
+
     /**
      * Elimina una foto por su id.
-     * 
+     *
      * @param id Identificador de la foto
      * @return Respuesta vacia indicando que la operacion termino
      */
@@ -90,5 +90,5 @@ public class FotoController {
         service.eliminarFoto(id);
         return ResponseEntity.ok().build();
     }
-    
+
 }

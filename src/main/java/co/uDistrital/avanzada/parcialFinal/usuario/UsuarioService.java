@@ -86,6 +86,18 @@ public class UsuarioService {
     public Usuario findById(Long id) {
         return repositorio.findById(id).orElse(null);
     }
+    
+    /**
+     * Realiza un login 
+     * 
+     * @param correo Correo del usuario
+     * @param password Contrasena del usuario
+     * @return  usuario encontrado
+     */
+    @CrossOrigin
+    public Usuario login(String correo, String password) {
+        return repositorio.findByCorreoAndPassword(correo, password);
+    }
 
     /**
      * Elimina a un usario por el id
