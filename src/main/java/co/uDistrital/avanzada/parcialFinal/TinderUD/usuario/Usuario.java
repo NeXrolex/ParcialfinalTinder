@@ -13,45 +13,45 @@ import lombok.Data;
 
 @Data //De lombok, de esta manera pudiendo usar los get y los set
 @Entity //Le mencionamos que va a ser una tabla
-@Table(name="usuarios") //Nombre de la tabla
+@Table(name = "usuarios") //Nombre de la tabla
 public class Usuario {
-    
+
     @Id//Identificador de la tabla
-    @GeneratedValue(strategy=GenerationType.IDENTITY)/*De esta manera asignamos
+    @GeneratedValue(strategy = GenerationType.IDENTITY)/*De esta manera asignamos
     el id y que no sea de manera manual*/
     private Long id;
-    
+
     private String nombre;
     private String apellido;
     private String correo;
     private String password;
     private String ciudad;
     private String fechaNacimiento;
+    private String generoUsuario;
     private String generoInteres;
     private int edadMin;
     private int edadMax;
     private String distanciaMax;
-    
+
     /**
      * Constructor vacio
-     * 
+     *
      */
     public Usuario() {
     }
-    
-    
-    
+
     /*En el constructor no entra el id porque es el identificador de la tabla
     entonces no puede estar dentro del objeto*/
     /**
      * Constructor con los parametros de un usario en tinder
-     * 
+     *
      * @param nombre Nombre del Usuario
      * @param apellido Apellido del Usuario
      * @param correo Correo electronico del usuario
      * @param password Contrasena del usuario
      * @param ciudad Ciudad del usuario
      * @param fechaNacimiento Fecha de nacimiento del usuario
+     * @param generoUsuario Genero del usuario
      * @param generoInteres Genero de interes del usuario
      * @param edadMin Edad minima de preferencias del usuario
      * @param edadMax Edad maxima de preferencias del usuario
@@ -59,7 +59,7 @@ public class Usuario {
      */
     public Usuario(String nombre, String apellido, String correo,
             String password, String ciudad, String fechaNacimiento,
-            String generoInteres, int edadMin, int edadMax,
+            String generoUsuario, String generoInteres, int edadMin, int edadMax,
             String distanciaMax) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -67,13 +67,11 @@ public class Usuario {
         this.password = password;
         this.ciudad = ciudad;
         this.fechaNacimiento = fechaNacimiento;
+        this.generoUsuario = generoUsuario;
         this.generoInteres = generoInteres;
         this.edadMin = edadMin;
         this.edadMax = edadMax;
         this.distanciaMax = distanciaMax;
     }
-    
-    
-    
-    
+
 }

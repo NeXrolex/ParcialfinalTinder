@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *
  * @author Alex
  */
-@Component // Es un service que se inyecta y comunica
+@Service // Es un service que se inyecta y comunica
 public class UsuarioService {
 
     @Autowired //Reconoce que se va a inyectar como dependencia
