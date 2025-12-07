@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package co.uDistrital.avanzada.parcialFinal.match;
+package co.uDistrital.avanzada.parcialFinal.TinderUD.match;
 
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *
  * @author Alex
  */
+@Service
 public class MatchService {
     
     @Autowired //Permite que Spring cree e inyecte automaticamente el repositorio
