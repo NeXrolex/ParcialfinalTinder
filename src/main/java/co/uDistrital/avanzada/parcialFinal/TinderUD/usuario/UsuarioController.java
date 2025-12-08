@@ -4,6 +4,7 @@
  */
 package co.uDistrital.avanzada.parcialFinal.TinderUD.usuario;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,8 @@ public class UsuarioController {
 
     @RequestMapping(value = "/api/usuario", method = RequestMethod.POST)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody
+            Usuario usuario) {
         return service.crearUnUsuario(usuario);
     }
 
@@ -45,7 +47,8 @@ public class UsuarioController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @RequestMapping(value = "/api/usuario/correo/{correo}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/usuario/correo/{correo}", method
+            = RequestMethod.GET)
     @CrossOrigin(origins = "*")
     public ResponseEntity<Usuario> obtenerPorCorreo(@PathVariable String correo) {
         Usuario usuario = service.findByCorreo(correo);

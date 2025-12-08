@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Controla todas las acciones y endpoint de las fotos
+ * 
+ * @author Alex, Steven
+ */
 @RestController
 public class FotoController {
 
@@ -41,7 +46,8 @@ public class FotoController {
         return ResponseEntity.ok(guardada);
     }
 
-    @PostMapping(value = "/api/foto/subir/{idUsuario}", consumes = "multipart/form-data")
+    @PostMapping(value = "/api/foto/subir/{idUsuario}",
+            consumes = "multipart/form-data")
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<Foto>> subirFotos(
             @PathVariable Long idUsuario,
@@ -55,10 +61,12 @@ public class FotoController {
             MultipartFile archivo = archivos.get(i);
             int orden = ordenes.get(i);
 
-            String nombre = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
+            String nombre = System.currentTimeMillis() + "_"
+                    + archivo.getOriginalFilename();
             Path ruta = carpetaUploads.resolve(nombre);
 
-            Files.copy(archivo.getInputStream(), ruta, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(archivo.getInputStream(), ruta, java.nio.file
+                    .StandardCopyOption.REPLACE_EXISTING);
 
             Foto foto = new Foto(idUsuario, nombre, orden);
             guardadas.add(service.guardar(foto));
@@ -67,16 +75,19 @@ public class FotoController {
         return ResponseEntity.ok(guardadas);
     }
 
-    @RequestMapping(value = "/api/foto/usuario/{idUsuario}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/foto/usuario/{idUsuario}",
+            method = RequestMethod.GET)
     @CrossOrigin
-    public ResponseEntity<List<Foto>> listarPorUsuario(@PathVariable Long idUsuario) {
+    public ResponseEntity<List<Foto>> listarPorUsuario(@PathVariable
+            Long idUsuario) {
         List<Foto> lista = service.getPorUsuario(idUsuario);
         return ResponseEntity.ok(lista);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/foto/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> eliminarFoto(@PathVariable Long id) throws IOException {
+    public ResponseEntity<Void> eliminarFoto(@PathVariable Long id)
+            throws IOException {
         Foto f = service.getPorId(id);
         if (f != null) {
             Path ruta = carpetaUploads.resolve(f.getUrl());
@@ -88,14 +99,16 @@ public class FotoController {
 
     @GetMapping("/api/foto/archivo/{nombre:.+}")
     @CrossOrigin
-    public ResponseEntity<Resource> obtenerArchivo(@PathVariable String nombre) {
+    public ResponseEntity<Resource> obtenerArchivo(@PathVariable 
+            String nombre) {
         try {
             Path path = carpetaUploads.resolve(nombre);
             Resource file = new UrlResource(path.toUri());
 
             if (file.exists() && file.isReadable()) {
                 return ResponseEntity.ok()
-                        .header("Content-Disposition", "inline; filename=\"" + file.getFilename() + "\"")
+                        .header("Content-Disposition", "inline; filename=\""
+                                + file.getFilename() + "\"")
                         .body(file);
             } else {
                 return ResponseEntity.notFound().build();
