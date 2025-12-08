@@ -45,6 +45,18 @@ public class FotoService {
     }
 
     /**
+     * Obtiene todas las fotos por el id del usuario almacenadas en la base de
+     * datos.
+     *
+     * @param idUsuario Id del usuario dueño de las fotos
+     * @return Lista de las fotos por id del usuario
+     */
+    @CrossOrigin
+    public Foto getPorId(Long id) {
+        return repositorio.findById(id).orElse(null);
+    }
+
+    /**
      * Elimina una foto por su identificador.
      *
      * @param id Identificador de la foto a eliminar

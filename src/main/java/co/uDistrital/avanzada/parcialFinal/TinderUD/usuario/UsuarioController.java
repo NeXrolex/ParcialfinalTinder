@@ -69,4 +69,22 @@ public class UsuarioController {
         service.eliminarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    
+    // Este metodo devuelve todos los usuarios menos el actual (el que esta logueado)
+    //Este metodo lo puse para mostrar los otros usuarios en las tarjetas para el match
+    @RequestMapping(value = "/api/usuarios/otros/{id}", method = RequestMethod.GET)
+@CrossOrigin(origins = "*")
+public ResponseEntity<List<Usuario>> obtenerOtrosUsuarios(@PathVariable Long id) {
+    List<Usuario> todos = service.getAllUsuarios();
+    
+    // Filtrar el usuario actual
+    List<Usuario> otros = todos.stream()
+                               .filter(u -> !u.getId().equals(id))
+                               .toList();
+    
+    return ResponseEntity.ok(otros);
+}
+
+
 }
