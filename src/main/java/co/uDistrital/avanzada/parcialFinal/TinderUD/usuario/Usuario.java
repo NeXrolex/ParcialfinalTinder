@@ -26,10 +26,12 @@ public class Usuario {
     el id y que no sea de manera manual*/
     private Long id;
         
-    @NotBlank(message = "El nickname no puede estar vacio")
+    
     @Size(min = 3, max = 50)
     private String nickname;
+    @NotBlank
     private String nombre;
+    @NotBlank
     private String apellido;
     
     @NotBlank
@@ -44,6 +46,8 @@ public class Usuario {
     private String ciudad;
     private String fechaNacimiento;
     private String generoUsuario;
+    
+    
     private String generoInteres;
     private int edadMin;
     private int edadMax;
@@ -70,15 +74,10 @@ public class Usuario {
      * @param ciudad Ciudad del usuario
      * @param fechaNacimiento Fecha de nacimiento del usuario
      * @param generoUsuario Genero del usuario
-     * @param generoInteres Genero de interes del usuario
-     * @param edadMin Edad minima de preferencias del usuario
-     * @param edadMax Edad maxima de preferencias del usuario
-     * @param distanciaMax Distancia maxima de preferencia del usuario
      */
     public Usuario(String nickname,String nombre, String apellido, String correo,
             String password,Integer edad, String ciudad, String fechaNacimiento,
-            String generoUsuario, String generoInteres, int edadMin, int edadMax,
-            String distanciaMax) {
+            String generoUsuario) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -88,10 +87,7 @@ public class Usuario {
         this.ciudad = ciudad;
         this.fechaNacimiento = fechaNacimiento;
         this.generoUsuario = generoUsuario;
-        this.generoInteres = generoInteres;
-        this.edadMin = edadMin;
-        this.edadMax = edadMax;
-        this.distanciaMax = distanciaMax;
+       
     }
 
 }
