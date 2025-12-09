@@ -1,4 +1,5 @@
 /*
+
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -9,9 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -23,18 +21,13 @@ import lombok.Data;
 @Entity
 @Table(name = "fotos")
 public class Foto {
-    
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     private Long idUsuario;   
     private String url; //Ruta, nombre de archivo o URL de la foto
-    private String descripcion;  
-    private boolean principal;  //Indica si es la foto principal del perfil
-    @Temporal(TemporalType.TIMESTAMP)
-    //Fecha y hora de publicacion de la foto
-    private Date fechaPublicacion;
+    private int orden;  
     
     /**
      * Constructor vacio
@@ -48,19 +41,11 @@ public class Foto {
      * 
      * @param idUsuario Id del usuario dueño de la foto
      * @param url Ruta o nombre del archivo/URL de la foto
-     * @param descripcion Descripcion de la foto
-     * @param principal Indica si es la foto principal
-     * @param fechaPublicacion Fecha y hora de publicacion
+     * @param orden Orden de las fotos
      */
-    public Foto(Long idUsuario, String url, String descripcion,
-            boolean principal, Date fechaPublicacion) {
+    public Foto(Long idUsuario, String url, int orden) {
         this.idUsuario = idUsuario;
         this.url = url;
-        this.descripcion = descripcion;
-        this.principal = principal;
-        this.fechaPublicacion = fechaPublicacion;
+        this.orden = orden;
     }
-    
-    
-    
 }
