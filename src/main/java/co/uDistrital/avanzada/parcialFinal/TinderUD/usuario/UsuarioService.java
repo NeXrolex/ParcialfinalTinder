@@ -51,6 +51,10 @@ public class UsuarioService {
     @CrossOrigin //Se maneja desde afuera
     //Es importante serialiazar para trabajar con otros entornos
     public ResponseEntity<Usuario> crearUnUsuario(Usuario usuario) {
+        
+        if (repositorio.existsByCorreo(usuario.getCorreo())) {
+            throw new IllegalArgumentException("El correo ya está registrado");
+        }
 
         repositorio.save(usuario);
         return ResponseEntity.ok(usuario);//Puedo realizar el guardado y esta
