@@ -39,7 +39,7 @@ public class Usuario {
     private String correo;
     @NotBlank
     private String password;
-    @NotBlank
+    
     @Min(18)
     @Max(120)
     private Integer edad;

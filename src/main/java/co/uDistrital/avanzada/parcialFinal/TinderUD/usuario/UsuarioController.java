@@ -147,7 +147,7 @@ public class UsuarioController {
      *   "contenido": "Contenido del correo"
      * }
      */
-    @PostMapping("/usuario/{id}/enviar-correo")
+    @PostMapping("/api/usuario/{id}/enviar-correo")
     public ResponseEntity enviarCorreoUsuario(@PathVariable Long id,
             @RequestBody Map<String, String> datos) {
         
