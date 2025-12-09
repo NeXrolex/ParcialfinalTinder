@@ -24,7 +24,11 @@ public class TinderUdApplication {
                 //allowedMethods("*").allowedHeaders("*")  deja pasar los metodos y los headers
                 // si el backend esta en el mismo dominio y puerto del frontend, no hay necesidad de este metodo
                 //o en su defecto se coloca la misma direccion y puerto
-                registry.addMapping("/api/**").allowedOrigins("http://localhost:8383").allowedMethods("*").allowedHeaders("*");
+                registry.addMapping("/api/**").allowedOrigins(
+                        "http://localhost:8383",
+                        "http://127.0.0.1:3000",
+                        "http://localhost:3000"
+                ).allowedMethods("*").allowedHeaders("*");
             }
         };
     }
