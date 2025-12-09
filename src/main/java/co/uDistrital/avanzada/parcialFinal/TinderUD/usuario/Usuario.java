@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 import lombok.Data;
 
 @Data //De lombok, de esta manera pudiendo usar los get y los set
@@ -46,7 +47,11 @@ public class Usuario {
     private String ciudad;
     private String fechaNacimiento;
     private String generoUsuario;
-    
+    @NotBlank
+    private String descripcion;
+    private double latitud;
+    private double longitud;
+    private Date fechaRegistro;
     
     private String generoInteres;
     private int edadMin;
@@ -74,10 +79,15 @@ public class Usuario {
      * @param ciudad Ciudad del usuario
      * @param fechaNacimiento Fecha de nacimiento del usuario
      * @param generoUsuario Genero del usuario
+     * @param descripcion Descripcion del usuario
+     * @param latitud Cordenada de usuario
+     * @param longitud Cordenada usuario
+     * @param fechaRegistro Fecha de registro del usuario
      */
     public Usuario(String nickname,String nombre, String apellido, String correo,
             String password,Integer edad, String ciudad, String fechaNacimiento,
-            String generoUsuario) {
+            String generoUsuario, String descripcion, double latitud,
+            double longitud, Date fechaRegistro) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -87,6 +97,10 @@ public class Usuario {
         this.ciudad = ciudad;
         this.fechaNacimiento = fechaNacimiento;
         this.generoUsuario = generoUsuario;
+        this.descripcion = descripcion;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.fechaRegistro = fechaRegistro;
        
     }
 
