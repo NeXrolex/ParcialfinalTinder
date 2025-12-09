@@ -4,10 +4,14 @@
  */
 package co.uDistrital.avanzada.parcialFinal.TinderUD.usuario;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -21,6 +25,9 @@ public class UsuarioService {
 
     @Autowired //Reconoce que se va a inyectar como dependencia
     private UsuarioRepository repositorio;
+
+    @Autowired
+    private JavaMailSender mailSender; //para enviar correos
 
     /**
      * Crea y guarda un usario
@@ -97,4 +104,28 @@ public class UsuarioService {
 
         repositorio.deleteById(id);
     }
+    
+    /**
+     * Envia un correo a un usario
+     * 
+     * @param usuario Usuario a enviar el correo
+     * @param asunto Asunto del correo
+     * @param contenido Contenido del correo
+     */
+    @CrossOrigin
+    public void enviarCorreoRegistro(Usuario usuario, String asunto,
+            String contenido) {
+
+        try {
+            SimpleMailMessage mensaje = new SimpleMailMessage();
+            mensaje.setTo(usuario.getCorreo());
+            mensaje.setSubject(asunto);
+            mensaje.setText(contenido);
+            mailSender.send(mensaje);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
