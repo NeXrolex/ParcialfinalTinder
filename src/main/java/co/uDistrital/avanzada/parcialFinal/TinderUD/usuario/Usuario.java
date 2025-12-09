@@ -4,6 +4,7 @@
  */
 package co.uDistrital.avanzada.parcialFinal.TinderUD.usuario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +36,7 @@ public class Usuario {
     @NotBlank
     private String apellido;
     
+    @Column(nullable = false, unique = true) //Solo debe existir un correo por usuario
     @NotBlank
     @Email
     private String correo;
