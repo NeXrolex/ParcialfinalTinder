@@ -134,26 +134,6 @@ public class UsuarioController {
         return ResponseEntity.ok(otros);
     }
 
-    @RequestMapping(value = "/api/usuarios/ubicacion/{id}", method = RequestMethod.POST)
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<Void> actualizarUbicacion(@PathVariable Long id, @RequestBody Map<String, Double> ubicacion) {
-        Usuario usuario = service.findById(id);
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Double lat = ubicacion.get("latitud");
-        Double lon = ubicacion.get("longitud");
-        if (lat != null && lon != null) {
-            usuario.setLatitud(lat);
-            usuario.setLongitud(lon);
-            service.crearUsuario(usuario); // o el método que actualice
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
     /**
      * Envía un correo a un usuario
      *
