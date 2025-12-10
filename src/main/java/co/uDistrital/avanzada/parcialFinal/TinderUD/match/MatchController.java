@@ -4,6 +4,7 @@
  */
 package co.uDistrital.avanzada.parcialFinal.TinderUD.match;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +22,35 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class MatchController {
-    
+
     @Autowired //Inyecta el servicio para poder usarlo en los metodos del controlador
     private MatchService service;
-    
+
     /**
-     * Crea un nuevo match.
-     * Recibe un objeto Match en formato JSON y retorna el match creado.
-     * 
+     * Crea un nuevo match. Recibe un objeto Match en formato JSON y retorna el
+     * match creado.
+     *
      * @param match Objeto Match enviado en el cuerpo de la peticion
      * @return Match creado dentro de un ResponseEntity
      */
     @RequestMapping(value = "/api/match", method = RequestMethod.POST)
     @CrossOrigin(origins = "http://localhost:8383") //Permite el acceso desde el frontend en este puerto
     public ResponseEntity<Match> crearMatch(@RequestBody Match match) {
+
+        if (match.getFechaHora() == null) {
+            match.setFechaHora(new Date());
+        }
+
+        if (match.getEstado() == null || match.getEstado().isEmpty()) {
+            match.setEstado("ACTIVO");  // Valor por defecto
+        }
+
         return service.crearMatch(match);
     }
-    
+
     /**
      * Lista todos los matches registrados.
-     * 
+     *
      * @return Lista de matches en formato JSON
      */
     @RequestMapping(value = "/api/match", method = RequestMethod.GET)
@@ -49,10 +59,10 @@ public class MatchController {
         List<Match> lista = service.getAllMatches();
         return ResponseEntity.ok(lista);
     }
-    
+
     /**
      * Obtiene un match por su id.
-     * 
+     *
      * @param id Identificador del match
      * @return Match en formato JSON (puede ser null si no existe)
      */
@@ -62,25 +72,24 @@ public class MatchController {
         Match match = service.findById(id);
         return ResponseEntity.ok(match);
     }
-    
+
     /**
      * Lista todos los matches asociados a un usuario.
-     * 
+     *
      * @param idUsuario Id del usuario
      * @return Lista de matches donde participa el usuario
      */
     @RequestMapping(value = "/api/match/usuario/{idUsuario}",
             method = RequestMethod.GET)
     @CrossOrigin(origins = "http://localhost:8383")
-    public ResponseEntity<List<Match>> listarPorUsuario(@PathVariable
-            Long idUsuario) {
+    public ResponseEntity<List<Match>> listarPorUsuario(@PathVariable Long idUsuario) {
         List<Match> lista = service.getMatchesPorUsuario(idUsuario);
         return ResponseEntity.ok(lista);
     }
-    
+
     /**
      * Elimina un match por su id.
-     * 
+     *
      * @param id Identificador del match
      * @return Respuesta vacia indicando que la operacion termino
      */
@@ -90,5 +99,5 @@ public class MatchController {
         service.eliminarMatch(id);
         return ResponseEntity.ok().build();
     }
-    
+
 }

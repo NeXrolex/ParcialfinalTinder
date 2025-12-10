@@ -39,7 +39,7 @@ public class UsuarioController {
      */
     @RequestMapping(value = "/api/usuario", method = RequestMethod.POST)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody
             Usuario usuario) {
         return service.crearUnUsuario(usuario);
     }
