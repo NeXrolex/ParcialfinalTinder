@@ -85,6 +85,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
     
+    
     /**
      * actualiza un usuario existente
      * 

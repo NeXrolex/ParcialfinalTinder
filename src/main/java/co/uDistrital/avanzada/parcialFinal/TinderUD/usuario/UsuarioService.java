@@ -61,6 +61,7 @@ public class UsuarioService {
         //ok para serializarlo
 
     }
+    
 
     /**
      * Obtiene todos los usuarios de la base de datos
