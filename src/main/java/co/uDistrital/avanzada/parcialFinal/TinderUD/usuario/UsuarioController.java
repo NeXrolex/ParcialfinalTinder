@@ -54,6 +54,7 @@ public class UsuarioController {
         List<Usuario> usuarios = service.getAllUsuarios();
         return ResponseEntity.ok(usuarios);
     }
+    
 
     /**
      * Actualiza la descripcion de un usuario
