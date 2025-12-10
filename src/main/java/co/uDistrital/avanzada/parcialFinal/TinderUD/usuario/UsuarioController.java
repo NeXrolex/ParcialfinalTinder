@@ -56,6 +56,31 @@ public class UsuarioController {
     }
 
     /**
+     * Actualiza la descripcion de un usuario
+     *
+     * @return errores si los hay
+     * @return ok
+     */
+@RequestMapping(value = "/api/usuarios/descripcion/{id}", method = RequestMethod.POST)
+@CrossOrigin(origins = "*")
+public ResponseEntity<Void> actualizarDescripcion(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    Usuario usuario = service.findById(id);
+    if (usuario == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    String descripcion = body.get("descripcion");
+    if (descripcion == null || descripcion.isBlank()) {
+        return ResponseEntity.badRequest().build();
+    }
+
+    usuario.setDescripcion(descripcion);
+    service.crearUsuario(usuario);
+    return ResponseEntity.ok().build();
+}
+
+
+    /**
      * Obtiene un usuario por su ID
      *
      * @param id Id del usuario
