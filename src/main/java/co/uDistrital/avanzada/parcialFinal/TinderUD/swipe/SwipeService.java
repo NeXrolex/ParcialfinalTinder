@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class SwipeService {
     
     @Autowired
-    private SwapeRepository repositorio;
+    private SwipeRepository repositorio;
     
      /**
      * Crea un nuevo swipe

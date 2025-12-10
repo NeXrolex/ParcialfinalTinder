@@ -30,23 +30,22 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService service;
-    
+
     /**
      * Crea un nuevo usuario
-     * 
+     *
      * @param usuario Datos del usuario a crear
      * @return Usuario creado
      */
     @RequestMapping(value = "/api/usuario", method = RequestMethod.POST)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody
-            Usuario usuario) {
+    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody Usuario usuario) {
         return service.crearUnUsuario(usuario);
     }
-    
+
     /**
      * Obtiene todos los usuarios
-     * 
+     *
      * @return Lista de todos los usuarios
      */
     @RequestMapping(value = "/api/usuario", method = RequestMethod.GET)
@@ -55,10 +54,10 @@ public class UsuarioController {
         List<Usuario> usuarios = service.getAllUsuarios();
         return ResponseEntity.ok(usuarios);
     }
-    
+
     /**
      * Obtiene un usuario por su ID
-     * 
+     *
      * @param id Id del usuario
      * @return Usuario encontrado
      */
@@ -67,10 +66,10 @@ public class UsuarioController {
     public ResponseEntity<Usuario> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
-    
+
     /**
      * Obtiene un usuario por su correo
-     * 
+     *
      * @param correo Correo del usuario
      * @return Usuario encontrado
      */
@@ -84,10 +83,10 @@ public class UsuarioController {
         }
         return ResponseEntity.ok(usuario);
     }
-    
+
     /**
      * actualiza un usuario existente
-     * 
+     *
      * @param id Id del usuario a actualizar
      * @param usuario Datos actualizados
      * @return Usuario actualizado
@@ -99,10 +98,10 @@ public class UsuarioController {
         Usuario actualizado = service.crearUsuario(usuario);
         return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }
-    
+
     /**
      * Elimina un usuario
-     * 
+     *
      * @param id Id del usuario a eliminar
      * @return Respuesta de conformacion
      */
@@ -112,72 +111,88 @@ public class UsuarioController {
         service.eliminarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
+
     /**
      * Obtiene otros usuarios, excewptuando el logueado
-     * 
+     *
      * @param id Id del usuario logueado
      * @return Lista de otros usuarios
      */
     // Este metodo devuelve todos los usuarios menos el actual (el que esta logueado)
     //Este metodo lo puse para mostrar los otros usuarios en las tarjetas para el match
-    @RequestMapping(value = "/api/usuarios/otros/{id}", method = 
-            RequestMethod.GET)
+    @RequestMapping(value = "/api/usuarios/otros/{id}", method
+            = RequestMethod.GET)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<List<Usuario>> obtenerOtrosUsuarios(@PathVariable
-            Long id) {
+    public ResponseEntity<List<Usuario>> obtenerOtrosUsuarios(@PathVariable Long id) {
         List<Usuario> todos = service.getAllUsuarios();
-    
-     // Filtrar el usuario actual
+
+        // Filtrar el usuario actual
         List<Usuario> otros = todos.stream()
-                               .filter(u -> !u.getId().equals(id))
-                               .toList();
-    
+                .filter(u -> !u.getId().equals(id))
+                .toList();
+
         return ResponseEntity.ok(otros);
     }
-    
-     /**
+
+    @RequestMapping(value = "/api/usuarios/ubicacion/{id}", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Void> actualizarUbicacion(@PathVariable Long id, @RequestBody Map<String, Double> ubicacion) {
+        Usuario usuario = service.findById(id);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Double lat = ubicacion.get("latitud");
+        Double lon = ubicacion.get("longitud");
+        if (lat != null && lon != null) {
+            usuario.setLatitud(lat);
+            usuario.setLongitud(lon);
+            service.crearUsuario(usuario); // o el método que actualice
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    /**
      * Envía un correo a un usuario
-     * 
+     *
      * POST /api/usuario/{id}/enviar-correo
-     * 
-     * Body (JSON):
-     * {
-     *   "asunto": "Asunto del correo",
-     *   "contenido": "Contenido del correo"
-     * }
+     *
+     * Body (JSON): { "asunto": "Asunto del correo", "contenido": "Contenido del
+     * correo" }
      */
     @PostMapping("/api/usuario/{id}/enviar-correo")
     public ResponseEntity enviarCorreoUsuario(@PathVariable Long id,
             @RequestBody Map<String, String> datos) {
-        
+
         try {
             // Obtener asunto y contenido del Map
             String asunto = datos.get("asunto");
             String contenido = datos.get("contenido");
-            
+
             // Validar que no sean nulos
             if (asunto == null || contenido == null) {
                 return ResponseEntity.badRequest()
-                    .body("Falta asunto o contenido en el JSON");
+                        .body("Falta asunto o contenido en el JSON");
             }
-            
+
             // Obtener usuario usando el método del service
             Usuario usuario = service.findById(id);
-            
+
             // Validar que exista el usuario
             if (usuario == null) {
                 return ResponseEntity.notFound().build();
             }
-            
+
             // Enviar correo
             service.enviarCorreoRegistro(usuario, asunto, contenido);
-            
+
             return ResponseEntity.ok("Correo enviado exitosamente");
-            
+
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
-                .body("Error al enviar correo: " + e.getMessage());
+                    .body("Error al enviar correo: " + e.getMessage());
         }
     }
 

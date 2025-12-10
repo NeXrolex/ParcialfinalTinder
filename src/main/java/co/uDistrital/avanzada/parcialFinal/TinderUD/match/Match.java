@@ -9,9 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -35,10 +32,6 @@ public class Match {
     //Id del segundo usuario del match
     private Long idUsuario2;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    //Indica que se almacena una fecha con fecha y hora completa
-    private Date fechaHora;
-    
     //Estado del match (por ejemplo: ACTIVO, BLOQUEADO, ELIMINADO)
     private String estado;
     
@@ -56,11 +49,9 @@ public class Match {
      * @param fechaHora Fecha y hora del match
      * @param estado Estado actual del match
      */
-    public Match(Long idUsuario1, Long idUsuario2, Date fechaHora,
-            String estado) {
+    public Match(Long idUsuario1, Long idUsuario2, String estado) {
         this.idUsuario1 = idUsuario1;
         this.idUsuario2 = idUsuario2;
-        this.fechaHora = fechaHora;
         this.estado = estado;
     }
     

@@ -30,10 +30,6 @@ public class MatchService {
      */
     @CrossOrigin
     public ResponseEntity<Match> crearMatch(Match match) {
-        //Si no viene la fecha, se asigna la fecha actual
-        if (match.getFechaHora() == null) {
-            match.setFechaHora(new Date());
-        }
         Match guardado = repositorio.save(match);
         return ResponseEntity.ok(guardado);
     }
@@ -89,7 +85,7 @@ public class MatchService {
      */
     @CrossOrigin
     public Match crearMatchEntreUsuarios(Long idUsuario1, Long idUsuario2) {
-        Match match = new Match(idUsuario1, idUsuario2, new Date(), "ACTIVO");
+        Match match = new Match(idUsuario1, idUsuario2, "ACTIVO");
         return repositorio.save(match);
     }
     
